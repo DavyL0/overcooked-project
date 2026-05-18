@@ -3,25 +3,26 @@
     <h2>RecipeBook</h2>
   </header>
 
-  <div *ngIf="recipes.length === 0" class="empty-state">
+  <div *ngIf="recipes.length === 0; else listaReceitas" class="empty-state">
     <p>Nenhuma receita cadastrada</p>
   </div>
 
-  <div *ngIf="recipes.length > 0" class="recipe-grid">
-    <div *ngFor="let recipe of recipes" class="recipe-card">
-      <div class="card-content">
-        <h3>{{ recipe.nome }}</h3>
-        <p class="info-line">
-          <strong>Categoria:</strong> <span class="badge">{{ recipe.categoria }}</span>
-        </p>
-        <p class="info-line">
-          <strong>Tempo:</strong> {{ recipe.tempoPreparo }} min
-        </p>
-      </div>
-
-      <div class="card-footer">
-        <a [routerLink]="['/detalhes', recipe.id]" class="btn-details">Ver Detalhes</a>
+  <ng-template #listaReceitas>
+    <div class="recipe-grid">
+      <div *ngFor="let recipe of recipes" class="recipe-card">
+        <div class="card-content">
+          <h3>{{ recipe.nome }}</h3>
+          <p class="info-line">
+            <strong>Categoria:</strong> <span class="badge">{{ recipe.categoria }}</span>
+          </p>
+          <p class="info-line">
+            <strong>Tempo:</strong> {{ recipe.tempoPreparo }} min
+          </p>
+        </div>
+        <div class="card-footer">
+          <a [routerLink]="['/detalhes', recipe.id]" class="btn-details">Ver Detalhes</a>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-template>
 </div>

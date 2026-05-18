@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
-import { Recipe } from '../../recipe/recipe.module';
+import { Recipe } from '../../recipe/recipe.model';
 
 @Component({
   selector: 'app-recipe-list',
@@ -11,7 +11,7 @@ import { Recipe } from '../../recipe/recipe.module';
   templateUrl: './recipe-list.html',
   styleUrls: ['./recipe-list.css']
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeList implements OnInit {
   recipes: Recipe[] = [];
 
   constructor(private recipeService: RecipeService) {}
