@@ -24,4 +24,8 @@ public class RecipeService {
 
         return receitas;
     }
+
+    public Recipe cadastrar(Recipe recipe) {
+        return recipeRepository.save(recipe);
+    }
 }
