@@ -26,8 +26,8 @@ public class Recipe {
     private Integer porcoes;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "recipe_ingredients", joinColumns = @JoinColumn(name = "recipe_id"))
-    @Column(name = "ingrediente")
+    @CollectionTable(name = "RECIPE_INGREDIENTS", joinColumns = @JoinColumn(name = "recipe_id"))
+    @Column(name = "INGREDIENTE")
     private List<String> ingredientes;
 
     @Column(nullable = false, columnDefinition = "TEXT")
