@@ -13,4 +13,7 @@ export class RecipeService {
   listarTodas(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(this.apiUrl);
   }
+  cadastrarReceita(recipe: Recipe): Observable<Recipe> {
+    return this.http.post<Recipe>(this.apiUrl, recipe);
+  }
 }
