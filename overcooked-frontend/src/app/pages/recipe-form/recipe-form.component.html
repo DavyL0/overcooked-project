@@ -1,0 +1,69 @@
+<div class="container mt-5" style="max-width: 700px;">
+  <div class="card shadow p-4">
+    <h2 class="mb-4 text-center">Cadastrar Nova Receita</h2>
+
+    <div *ngIf="mensagemSucesso" class="alert alert-success text-center">{{ mensagemSucesso }}</div>
+    <div *ngIf="erroServidor" class="alert alert-danger text-center">{{ erroServidor }}</div>
+
+    <form [formGroup]="recipeForm" (ngSubmit)="submeter()">
+
+      <div class="mb-3">
+        <label class="form-label font-weight-bold">Nome da Receita</label>
+        <input type="text" formControlName="nome" class="form-control" [ngClass]="{'is-invalid': recipeForm.get('nome')?.touched && recipeForm.get('nome')?.invalid}">
+        <div class="invalid-feedback" *ngIf="recipeForm.get('nome')?.hasError('required')">O nome é obrigatório.</div>
+        <div class="invalid-feedback" *ngIf="recipeForm.get('nome')?.hasError('nomeDuplicado')">Este nome já foi cadastrado em outra receita.</div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Categoria</label>
+          <select formControlName="category" class="form-select" [ngClass]="{'is-invalid': recipeForm.get('category')?.touched && recipeForm.get('category')?.invalid}">
+            <option value="">Selecione uma categoria</option>
+            <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+          </select>
+          <div class="invalid-feedback">A categoria é obrigatória.</div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Tempo (min)</label>
+          <input type="number" formControlName="tempoPreparo" class="form-control" [ngClass]="{'is-invalid': recipeForm.get('tempoPreparo')?.touched && recipeForm.get('tempoPreparo')?.invalid}">
+          <div class="invalid-feedback" *ngIf="recipeForm.get('tempoPreparo')?.hasError('required')">Obrigatório.</div>
+          <div class="invalid-feedback" *ngIf="recipeForm.get('tempoPreparo')?.hasError('min')">Mínimo 1 min.</div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Porções</label>
+          <input type="number" formControlName="porcoes" class="form-control" [ngClass]="{'is-invalid': recipeForm.get('porcoes')?.touched && recipeForm.get('porcoes')?.invalid}">
+          <div class="invalid-feedback" *ngIf="recipeForm.get('porcoes')?.hasError('required')">Obrigatório.</div>
+          <div class="invalid-feedback" *ngIf="recipeForm.get('porcoes')?.hasError('min')">Mínimo 1.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label d-flex justify-content-between align-items-center">
+          Ingredientes
+          <button type="button" class="btn btn-sm btn-outline-primary" (click)="adicionarIngrediente()">+ Adicionar</button>
+        </label>
+        <div formArrayName="ingredientes">
+          <div *ngFor="let ing of ingredientes.controls; let i = index" class="input-group mb-2">
+            <input type="text" [formControlName PallName]="i" [formControl]="ing" class="form-control" placeholder="Ex: 1 xícara de açúcar" [ngClass]="{'is-invalid': ing.touched && ing.invalid}">
+            <button type="button" class="btn btn-outline-danger" [disabled]="ingredientes.length === 1" (click)="removerIngrediente(i)">Remover</button>
+            <div class="invalid-feedback" *ngIf="ing.hasError('required')">O ingrediente não pode estar vazio.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Modo de Preparo</label>
+        <textarea formControlName="modoPreparo" rows="4" class="form-control" placeholder="Descreva os passos aqui..." [ngClass]="{'is-invalid': recipeForm.get('modoPreparo')?.touched && recipeForm.get('modoPreparo')?.invalid}"></textarea>
+        <div class="invalid-feedback">O modo de preparo é obrigatório.</div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-light" [routerLink]="['/']">Cancelar</button>
+        <button type="submit" class="btn btn-success" [disabled]="recipeForm.invalid">Salvar Receita</button>
+      </div>
+
+    </form>
+  </div>
+</div>
